@@ -9,363 +9,56 @@
 
 <p align="center">
   <b>Real-time, interactive, and beautiful dashboard for smart waste management.</b><br>
-  <i>Built for HackXplore 2025 🚀</i>
+  <i>Built in 24 hours for HackXplore 2025 🚀</i>
 </p>
 
 ---
 
-## 🚀 What is HackXplore Smart Waste Dashboard?
+## 🚀 Live Demo
 
-HackXplore Smart Waste Dashboard is a modern, full-stack web application that empowers cities and organizations to monitor, analyze, and optimize their waste collection operations.  
-It features real-time mapping, historical data playback, truck management, and actionable analytics—all in a slick, dark-themed UI.
+👉 **[Try it now! https://smecosystems.netlify.app](https://smecosystems.netlify.app/)**
 
 ---
 
 ## ✨ Features
 
-- **🗺️ Live Map:** Visualize all waste containers and trucks in real time.
-- **⏳ Time Travel:** Use the date/time slider to see historical fill levels and truck routes.
-- **📊 Analytics Dashboard:** Get instant stats on waste collected, fill levels, and service needs.
-- **🚚 Truck Management:** Add, edit, and monitor collection trucks and their capacities.
-- **⚡ Fast & Responsive:** Built with React 19, MUI, and TypeScript for a seamless experience.
-- **🌙 Dark Mode:** Eye-friendly interface for late-night hackathons and city ops!
+- 🗺️ **Live Map:** Instantly see all waste containers and trucks.
+- ⏳ **Time Travel:** Replay history with a single click.
+- 📊 **Analytics:** Get instant stats on waste, fill levels, and service needs.
+- 🚚 **Truck Management:** Add, edit, and monitor trucks and their capacities.
+- ⚡ **Fast & Responsive:** React 19, MUI, and TypeScript.
+- 🌙 **Dark Mode:** For late-night hacking and city ops.
 
 ---
 
-## 🛠️ Getting Started
-
-### 1. Clone the repo
+## 🛠️ Quickstart
 
 ```bash
-git clone https://github.com/yourusername/hackxplore-frontend.git
+git clone https://github.com/HarunSMetin/hackxplore_frontend.git
 cd hackxplore-frontend
-```
-
-### 2. Install dependencies
-
-```bash
 npm install
-```
-
-### 3. Run the app
-
-```bash
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🤝 Contributing
+## 🏆 Why This Project?
 
-We welcome contributions from everyone! Please read our [Contributing Guide](CONTRIBUTING.md) for more information.
+- **Real-time everything:** See the city’s waste status live.
+- **Time slider:** Instantly jump to any moment in the past.
+- **Mobile-ready:** Works on any device.
+- **Hackathon-built:** Fast, beautiful, and easy to extend.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT
 
 ---
 
-## 🙏 Acknowledgments
-
-- [Create React App](https://github.com/facebook/create-react-app) for the boilerplate.
-- [MUI](https://mui.com/) for the beautiful UI components.
-- [React Router](https://reactrouter.com/) for routing.
-- [Redux Toolkit](https://redux-toolkit.js.org/) for state management.
-- [Axios](https://axios-http.com/) for HTTP requests.
-- [Leaflet](https://leafletjs.com/) for interactive maps.
-- [Chart.js](https://www.chartjs.org/) for data visualization.
-- [Moment.js](https://momentjs.com/) for date/time manipulation.
-
----
-
-## 📞 Contact
-
-For any inquiries, please contact us at [support@hackxplore.com](mailto:support@hackxplore.com).
-
----
-
-## 🌐 Social Media
-
-- Twitter: [@hackxplore](https://twitter.com/hackxplore)
-- LinkedIn: [HackXplore](https://www.linkedin.com/company/hackxplore)
-- Facebook: [HackXplore](https://www.facebook.com/hackxplore)
-- Instagram: [@hackxplore](https://www.instagram.com/hackxplore)
-
----
-
-## 🚀 Deployments
-
-Check out the live demo at [HackXplore Smart Waste Dashboard](https://hackxplore.com/demo).
-
----
-
-## 📈 Analytics
-
-We use Google Analytics to track user interactions and improve our dashboard. You can opt-out anytime.
-
----
-
-## 🔒 Privacy
-
-We value your privacy. Please read our [Privacy Policy](PRIVACY.md) to understand how we handle your data.
-
----
-
-## ⚠️ Disclaimer
-
-This project is for educational purposes only. We are not responsible for any misuse or damage caused by this dashboard.
-
----
-
-## 🎉 Changelog
-
-### v1.0.0
-
-- Initial release with core features.
-
-### v1.1.0
-
-- Added user authentication.
-- Enhanced analytics dashboard.
-
-### v1.2.0
-
-- Integrated real-time data updates.
-- Improved map performance.
-
-### v1.3.0
-
-- Added support for multiple languages.
-- Enhanced accessibility features.
-
-### v1.4.0
-
-- Integrated payment gateway for donations.
-- Enhanced security features.
-
-### v1.5.0
-
-- Added mobile app support.
-- Enhanced user profile management.
-
-### v1.6.0
-
-- Integrated social media sharing.
-- Enhanced reporting features.
-
-### v1.7.0
-
-- Added dark mode support.
-- Enhanced data export options.
-
-### v1.8.0
-
-- Integrated machine learning for predictive analytics.
-- Enhanced user onboarding experience.
-
-### v1.9.0
-
-- Added support for IoT devices.
-- Enhanced real-time notifications.
-
-### v2.0.0
-
-- Major redesign of the dashboard UI.
-- Enhanced performance and scalability.
-
----
-
-## 🧑‍🤝‍🧑 Community
-
-Join our community forum at [HackXplore Community](https://community.hackxplore.com) to connect with other users and contributors.
-
----
-
-## 📚 Documentation
-
-For detailed documentation, please visit [HackXplore Docs](https://docs.hackxplore.com).
-
----
-
-## 🛡️ Security
-
-We take security seriously. Please report any security vulnerabilities to [security@hackxplore.com](mailto:security@hackxplore.com).
-
----
-
-## 💡 Ideas and Feedback
-
-We welcome your ideas and feedback! Please submit them through our [Feedback Form](https://hackxplore.com/feedback).
-
----
-
-## 🏆 Sponsorship
-
-Interested in sponsoring HackXplore? Please contact us at [sponsor@hackxplore.com](mailto:sponsor@hackxplore.com).
-
----
-
-## 🤖 AI Integration
-
-We are exploring AI integration for smarter analytics and predictions. Stay tuned!
-
----
-
-## 🌍 Global Impact
-
-HackXplore aims to make a global impact by promoting smart waste management solutions. Join us in our mission!
-
----
-
-## 📅 Roadmap
-
-- [ ] Q1 2025: Launch mobile app.
-- [ ] Q2 2025: Expand to new cities.
-- [ ] Q3 2025: Integrate with more IoT devices.
-- [ ] Q4 2025: Launch AI-powered features.
-
----
-
-## 📞 Contact
-
-For any inquiries, please contact us at [support@hackxplore.com](mailto:support@hackxplore.com).
-
----
-
-## 🌐 Social Media
-
-- Twitter: [@hackxplore](https://twitter.com/hackxplore)
-- LinkedIn: [HackXplore](https://www.linkedin.com/company/hackxplore)
-- Facebook: [HackXplore](https://www.facebook.com/hackxplore)
-- Instagram: [@hackxplore](https://www.instagram.com/hackxplore)
-
----
-
-## 🚀 Deployments
-
-Check out the live demo at [HackXplore Smart Waste Dashboard](https://hackxplore.com/demo).
-
----
-
-## 📈 Analytics
-
-We use Google Analytics to track user interactions and improve our dashboard. You can opt-out anytime.
-
----
-
-## 🔒 Privacy
-
-We value your privacy. Please read our [Privacy Policy](PRIVACY.md) to understand how we handle your data.
-
----
-
-## ⚠️ Disclaimer
-
-This project is for educational purposes only. We are not responsible for any misuse or damage caused by this dashboard.
-
----
-
-## 🎉 Changelog
-
-### v1.0.0
-
-- Initial release with core features.
-
-### v1.1.0
-
-- Added user authentication.
-- Enhanced analytics dashboard.
-
-### v1.2.0
-
-- Integrated real-time data updates.
-- Improved map performance.
-
-### v1.3.0
-
-- Added support for multiple languages.
-- Enhanced accessibility features.
-
-### v1.4.0
-
-- Integrated payment gateway for donations.
-- Enhanced security features.
-
-### v1.5.0
-
-- Added mobile app support.
-- Enhanced user profile management.
-
-### v1.6.0
-
-- Integrated social media sharing.
-- Enhanced reporting features.
-
-### v1.7.0
-
-- Added dark mode support.
-- Enhanced data export options.
-
-### v1.8.0
-
-- Integrated machine learning for predictive analytics.
-- Enhanced user onboarding experience.
-
-### v1.9.0
-
-- Added support for IoT devices.
-- Enhanced real-time notifications.
-
-### v2.0.0
-
-- Major redesign of the dashboard UI.
-- Enhanced performance and scalability.
-
----
-
-## 🧑‍🤝‍🧑 Community
-
-Join our community forum at [HackXplore Community](https://community.hackxplore.com) to connect with other users and contributors.
-
----
-
-## 📚 Documentation
-
-For detailed documentation, please visit [HackXplore Docs](https://docs.hackxplore.com).
-
----
-
-## 🛡️ Security
-
-We take security seriously. Please report any security vulnerabilities to [security@hackxplore.com](mailto:security@hackxplore.com).
-
----
-
-## 💡 Ideas and Feedback
-
-We welcome your ideas and feedback! Please submit them through our [Feedback Form](https://hackxplore.com/feedback).
-
----
-
-## 🏆 Sponsorship
-
-Interested in sponsoring HackXplore? Please contact us at [sponsor@hackxplore.com](mailto:sponsor@hackxplore.com).
-
----
-
-## 🤖 AI Integration
-
-We are exploring AI integration for smarter analytics and predictions. Stay tuned!
-
----
-
-## 🌍 Global Impact
-
-HackXplore aims to make a global impact by promoting smart waste management solutions. Join us in our mission!
+<p align="center">
+  <b>Let’s make cities cleaner, smarter, and greener. Happy hacking! 🚀</b>
+</p>
