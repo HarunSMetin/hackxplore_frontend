@@ -18,7 +18,7 @@
 
 👉 **[Try it now! https://smecosystems.netlify.app](https://smecosystems.netlify.app/)**
 
----
+## <p align="center">❌ DON'T WRITE ANY ROUTING FOR LINK ❌ FOR EXAMPLE: https://smecosystems.netlify.app/dashboard ❌</p>
 
 ## ✨ Features
 
