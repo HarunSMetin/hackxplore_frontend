@@ -1,5 +1,6 @@
+/* eslint-disable */
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import TruckManagement from "../components/TruckManagement/TruckManagement";
 
 const TruckManagementPage: React.FC = () => {

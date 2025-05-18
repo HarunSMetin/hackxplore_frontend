@@ -44,7 +44,10 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "ignoreDuringBuilds": true
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
