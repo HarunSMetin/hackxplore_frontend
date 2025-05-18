@@ -35,7 +35,7 @@ import { TruckService, ContainerService } from "../../services/api";
 
 const containerStyle = {
   width: "100%",
-  height: "100%",
+  height: "75vh", // Increased height for a larger map
   borderRadius: 16,
 };
 
@@ -62,7 +62,7 @@ const MapComponent = () => {
   >([]);
   const [filteredTrucks, setFilteredTrucks] = useState<Truck[]>([]);
   const [loading, setLoading] = useState(false);
-  const [mapCenter, setMapCenter] = useState(MAP.DEFAULT_CENTER);
+  const [mapCenter, setMapCenter] = useState({ lat: 49.4875, lng: 8.466 });
   const [mapZoom, setMapZoom] = useState(MAP.DEFAULT_ZOOM);
   const [mapLoaded, setMapLoaded] = useState(false);
   // Add containerReadings state with proper typing
@@ -311,6 +311,132 @@ const MapComponent = () => {
     fetchReadings();
   }, [startDate, timeFilterEnabled, containers]);
 
+  // Helper to get a route between points using Google Directions API
+  const getTruckRoute = async (
+    origin: { lat: number; lng: number },
+    waypoints: Array<{ lat: number; lng: number }>,
+    destination: { lat: number; lng: number }
+  ): Promise<Array<{ lat: number; lng: number }>> => {
+    if (!window.google || !window.google.maps) return [];
+
+    return new Promise((resolve, reject) => {
+      const directionsService = new window.google.maps.DirectionsService();
+
+      directionsService.route(
+        {
+          origin,
+          destination,
+          waypoints: waypoints.map((wp) => ({
+            location: new window.google.maps.LatLng(wp.lat, wp.lng),
+            stopover: true,
+          })),
+          travelMode: window.google.maps.TravelMode.DRIVING,
+          optimizeWaypoints: true,
+        },
+        (result, status) => {
+          if (status === "OK" && result?.routes[0]) {
+            const routePath = result.routes[0].overview_path.map((p) => ({
+              lat: p.lat(),
+              lng: p.lng(),
+            }));
+            resolve(routePath);
+          } else {
+            reject(status);
+          }
+        }
+      );
+    });
+  };
+
+  // Add a new state variable to store routes for all trucks
+  const [truckRoutes, setTruckRoutes] = useState<{
+    [truckId: number]: Array<{ lat: number; lng: number }>;
+  }>({});
+
+  useEffect(() => {
+    const generateRoute = async () => {
+      if (!selectedTruck || filteredContainers.length === 0 || !mapLoaded) {
+        return;
+      }
+
+      const truck = trucks.find((t) => t.id === selectedTruck);
+      if (!truck) return;
+
+      // Check if we already have a route for this truck
+      if (truckRoutes[selectedTruck] && truckRoutes[selectedTruck].length > 0) {
+        // Just focus on the existing route
+        focusOnRoute(truckRoutes[selectedTruck]);
+        return;
+      }
+
+      // Use the truck's current location as origin and destination
+      const origin = { lat: truck.location_lat, lng: truck.location_lng };
+      const destination = origin;
+
+      // Different route strategy for different trucks:
+      // - Truck 1: Focuses on fullest containers first
+      // - Truck 2: Focuses on containers closest to its position
+      // - Other trucks: Mix of strategies
+
+      let containersToVisit = [...filteredContainers];
+
+      if (truck.id === 1) {
+        // Sort by fullness to prioritize the fullest containers
+        containersToVisit = containersToVisit.sort(
+          (a, b) => b.current_fill - a.current_fill
+        );
+      } else if (truck.id === 2) {
+        // Sort by distance to truck
+        containersToVisit = containersToVisit.sort((a, b) => {
+          const distanceA = Math.sqrt(
+            Math.pow(a.location_lat - truck.location_lat, 2) +
+              Math.pow(a.location_lng - truck.location_lng, 2)
+          );
+          const distanceB = Math.sqrt(
+            Math.pow(b.location_lat - truck.location_lat, 2) +
+              Math.pow(b.location_lng - truck.location_lng, 2)
+          );
+          return distanceA - distanceB;
+        });
+      } else {
+        // Mix of strategies for other trucks
+        // Make this random but deterministic for each truck
+        const randomSeed = truck.id * 1000;
+        containersToVisit = containersToVisit.sort((a, b) => {
+          const valueA = a.current_fill + Math.sin(a.id * randomSeed) * 0.5;
+          const valueB = b.current_fill + Math.sin(b.id * randomSeed) * 0.5;
+          return valueB - valueA;
+        });
+      }
+
+      // Limit to 23 waypoints (Google Maps has a limit of 25 including origin/destination)
+      const waypoints = containersToVisit.slice(0, 23).map((c) => ({
+        lat: c.location_lat,
+        lng: c.location_lng,
+      }));
+
+      try {
+        const route = await getTruckRoute(origin, waypoints, destination);
+
+        // Store the route for this specific truck
+        setTruckRoutes((prev) => ({
+          ...prev,
+          [truck.id]: route,
+        }));
+
+        // If you have a valid route, focus on it
+        if (route.length > 0) {
+          focusOnRoute(route);
+        }
+      } catch (err) {
+        console.error("Failed to get truck route:", err);
+      }
+    };
+
+    generateRoute();
+    // Only re-run when relevant data changes
+  }, [selectedTruck, filteredContainers, trucks, mapLoaded, truckRoutes]);
+
   if (loadError) {
     return (
       <Box sx={{ p: 3, textAlign: "center" }}>
@@ -337,7 +463,14 @@ const MapComponent = () => {
     );
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        minHeight: "90vh",
+      }}
+    >
       {/* Add this time filter panel before the truck selection panel */}
       <Box sx={commonStyles.controlPanel}>
         <Box
@@ -405,7 +538,9 @@ const MapComponent = () => {
         </Select>
       </Box>
 
-      <Box sx={commonStyles.mapContainer}>
+      <Box
+        sx={{ ...commonStyles.mapContainer, flexGrow: 1, minHeight: "75vh" }}
+      >
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={mapCenter}
@@ -489,40 +624,33 @@ const MapComponent = () => {
               </InfoWindow>
             )}
 
+          {/* Only render the road-based truck route */}
           {mapLoaded &&
-            selectedTruck !== null &&
-            filteredTrucks.find((t) => t.id === selectedTruck)?.route && (
+            selectedTruck &&
+            truckRoutes[selectedTruck] &&
+            truckRoutes[selectedTruck].length > 1 && (
               <Polyline
-                path={
-                  filteredTrucks.find((t) => t.id === selectedTruck)?.route ||
-                  []
-                }
+                path={truckRoutes[selectedTruck]}
                 options={{
-                  strokeColor: "#00bcd4",
-                  strokeOpacity: 0.8,
-                  strokeWeight: 5,
-                }}
-              />
-            )}
-
-          {mapLoaded &&
-            selectedTruck !== null &&
-            filteredTrucks.find((t) => t.id === selectedTruck) && (
-              <Marker
-                position={{
-                  lat: filteredTrucks.find((t) => t.id === selectedTruck)!
-                    .location_lat,
-                  lng: filteredTrucks.find((t) => t.id === selectedTruck)!
-                    .location_lng,
-                }}
-                icon={{
-                  path: "M17.402,0H5.643C2.526,0,0,3.467,0,6.584v34.804c0,3.116,2.526,5.644,5.643,5.644h11.759c3.116,0,5.644-2.527,5.644-5.644 V6.584C23.044,3.467,20.518,0,17.402,0z M22.057,14.188v26.495c0,2.594-2.106,4.702-4.7,4.702h-9.67c-2.594,0-4.7-2.108-4.7-4.702 V14.188c0-2.594,2.106-4.7,4.7-4.7h9.67C19.951,9.488,22.057,11.594,22.057,14.188z",
-                  fillColor: "#00bcd4",
-                  fillOpacity: 0.9,
-                  strokeWeight: 1,
-                  strokeColor: "#ffffff",
-                  scale: 0.8,
-                  anchor: new google.maps.Point(12, 12),
+                  strokeColor:
+                    selectedTruck === 1
+                      ? "#00bcd4"
+                      : selectedTruck === 2
+                      ? "#ff9800"
+                      : "#4caf50",
+                  strokeOpacity: 0.9,
+                  strokeWeight: 6,
+                  icons: [
+                    {
+                      icon: {
+                        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                        scale: 3,
+                      },
+                      offset: "50%",
+                      repeat: "100px",
+                    },
+                  ],
+                  zIndex: 2,
                 }}
               />
             )}
